@@ -7,7 +7,7 @@ pipeline{
     stages{
         stage("Git Checkout"){
             steps{
-                git credentialsId: 'manikanta', url: 'https://github.com/manikantabns/myweb.git'
+                git credentialsId: 'mani', url: 'https://github.com/manikantabns/myweb.git'
             }
         }
         stage("Maven Build"){
@@ -18,13 +18,13 @@ pipeline{
         }
         stage("deploy-dev"){
             steps{
-                sshagent(['mani']) {
+                sshagent(['mk']) {
                 sh """
-                    scp -o StrictHostKeyChecking=no target/myweb.war  ec2-user@192.168.1.13:/home/ec2-user/apache-tomcat-9.0.85/webapps/
+                    scp -o StrictHostKeyChecking=no target/myweb.war  ec2-user@10.1.0.5:/home/ec2-user/apache-tomcat-9.0.89/webapps/
                     
-                    ssh ec2-user@192.168.1.13 /home/ec2-user/apache-tomcat-9.0.85/bin/shutdown.sh
+                    ssh ec2-user@10.1.0.5 /home/ec2-user/apache-tomcat-9.0.89/bin/shutdown.sh
                     
-                    ssh ec2-user@192.168.1.13 /home/ec2-user/apache-tomcat-9.0.85/bin/startup.sh
+                    ssh ec2-user@10.1.0.5 /home/ec2-user/apache-tomcat-9.0.89/bin/startup.sh
                 
                 """
             }
