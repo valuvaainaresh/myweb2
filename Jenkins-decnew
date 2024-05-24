@@ -20,7 +20,7 @@ pipeline{
             steps{
                 sshagent(['mani']) {
                 sh """
-                    scp -o StrictHostKeyChecking=no target/myweb.war ec2-user@10.1.0.14:/root/tomcat/tomcat/webapps/
+                    scp -o StrictHostKeyChecking=no target/myweb.war ec2-user@10.1.0.14:/root/tomcat/webapps/
 
                     ssh ec2-user@10.1.0.14 /root/tomcat/bin/shutdown.sh
                     
